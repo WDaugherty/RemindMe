@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        //Defines the first name textfield
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Empty File"
+            android:padding="10dp"
+            android:textColor="#0022ff"
+            android:id="@+id/first" />
+        //Defines the last name textfield
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Empty File"
+            android:padding="1dp"
+            android:textColor="#0022ff"
+            android:id="@+id/last" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        //Defines the phone number textfield
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Empty File"
+            android:paddingLeft="20dp"
+            android:textColor="#0022ff"
+            android:id="@+id/phone" />
+        //Defines the email textfield
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Empty File"
+            android:padding="10dp"
+            android:textColor="#0022ff"
+            android:id="@+id/email" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
