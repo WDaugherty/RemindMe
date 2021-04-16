@@ -5,9 +5,36 @@
     android:layout_height="match_parent"
     tools:context=".ui.monthly.MonthlyFragment">
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 187dc0dbf157f80bef57a8f8f2d5a499070dcf1a
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="Monthly" />
 
+<<<<<<< HEAD
+=======
+    <!-- Add TextView to display the date -->
+    <TextView
+        android:id="@+id/date_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="20dp"
+        android:text="Set the Date"
+        android:textColor="@android:color/background_dark"
+        android:textStyle="bold" />
+
+    <!-- Add CalenderView to display the Calender -->
+    <CalendarView
+        android:id="@+id/calender"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="19dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </CalendarView>
+
+>>>>>>> 187dc0dbf157f80bef57a8f8f2d5a499070dcf1a
 </FrameLayout>

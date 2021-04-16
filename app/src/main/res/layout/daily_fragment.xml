@@ -18,6 +18,19 @@
             android:layout_weight="0.14" >
         </ExpandableListView>
 
+<<<<<<< HEAD
+=======
+
+        <ProgressBar
+            android:id="@+id/pb"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:max="100" />
+
+
+>>>>>>> 187dc0dbf157f80bef57a8f8f2d5a499070dcf1a
     </LinearLayout>
 
 </FrameLayout>

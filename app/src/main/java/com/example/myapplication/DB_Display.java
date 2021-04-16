@@ -81,11 +81,11 @@ public class DB_Display extends AppCompatActivity {
         };
 
         //create the adapter
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(getApplicationContext(), R.layout.row_item, cursor, projection, to, 0);
+        //SimpleCursorAdapter adapter = new SimpleCursorAdapter(getApplicationContext(), R.layout.row_item, cursor, projection, to, 0);
 
         //set the list to the adapter
         final ListView listView = (ListView) findViewById(list);
-        listView.setAdapter(adapter);
+        //listView.setAdapter(adapter);
 
         //set up for the empty non data messaged
         TextView emptyView = (TextView) findViewById(android.R.id.empty);

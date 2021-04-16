@@ -3,20 +3,21 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.ProgressBar;
 
-<<<<<<< HEAD
-public class MainActivity extends AppCompatActivity {
-=======
 
-import com.google.android.libraries.places.api.net.PlacesClient;
+public class ProgressActivity extends AppCompatActivity{
 
-public class MainActivity extends AppCompatActivity {
-    PlacesClient placesClient;
->>>>>>> 187dc0dbf157f80bef57a8f8f2d5a499070dcf1a
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ProgressBar pb=(ProgressBar) findViewById(R.id.pb);
+        pb.setProgress(75);
+
     }
+
+
 }
