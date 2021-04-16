@@ -3,12 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<<<<<<< HEAD
-=======
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        //Defines the first name textfield
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -16,7 +15,7 @@
             android:padding="10dp"
             android:textColor="#0022ff"
             android:id="@+id/first" />
-        //Defines the last name textfield
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,7 +27,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        //Defines the phone number textfield
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,7 +35,7 @@
             android:paddingLeft="20dp"
             android:textColor="#0022ff"
             android:id="@+id/phone" />
-        //Defines the email textfield
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,5 +45,5 @@
             android:id="@+id/email" />
     </LinearLayout>
 
->>>>>>> bf6f4794179236a71d4cb1b449662d6c453938cd
+
 </androidx.constraintlayout.widget.ConstraintLayout>

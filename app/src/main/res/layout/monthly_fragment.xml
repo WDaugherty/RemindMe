@@ -5,12 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".ui.monthly.MonthlyFragment">
 
-<<<<<<< HEAD
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="Monthly" />
-=======
+
     <!-- Add TextView to display the date -->
     <TextView
         android:id="@+id/date_view"
@@ -30,6 +30,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
     </CalendarView>
->>>>>>> bf6f4794179236a71d4cb1b449662d6c453938cd
 
 </FrameLayout>
