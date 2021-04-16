@@ -6,6 +6,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+<<<<<<< HEAD
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Instrumentation;
@@ -13,6 +14,10 @@ import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+=======
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+>>>>>>> bf6f4794179236a71d4cb1b449662d6c453938cd
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,20 +28,28 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+<<<<<<< HEAD
 import android.util.Log;
+=======
+>>>>>>> bf6f4794179236a71d4cb1b449662d6c453938cd
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+<<<<<<< HEAD
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
+=======
+import android.widget.TimePicker;
+>>>>>>> bf6f4794179236a71d4cb1b449662d6c453938cd
 
 import com.example.myapplication.DatePickerFragment;
 import com.example.myapplication.R;
 import com.example.myapplication.TimePickerFragment;
 import com.example.myapplication.ui.goal.CreateViewModel;
+<<<<<<< HEAD
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
@@ -94,6 +107,22 @@ public class CreateFragment extends Fragment implements DatePickerDialog.OnDateS
 
         });
         Button startDate, startTime, endDate, endTime, discard, save;
+=======
+import com.google.android.material.navigation.NavigationView;
+
+public class CreateFragment extends Fragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+
+    private CreateViewModel mViewModel;
+    int startYear, startMonth, startDay;
+    int endYear, endMonth, endDay;
+    private AppBarConfiguration mAppBarConfiguration;
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+
+        Button startDate, startTime, endDate, endTime, discard, save;
+        View view = inflater.inflate(R.layout.fragment_create_task, container, false);
+>>>>>>> bf6f4794179236a71d4cb1b449662d6c453938cd
         endDate = view.findViewById(R.id.date);
         endTime = view.findViewById(R.id.time);
         discard = view.findViewById(R.id.discard);
@@ -130,7 +159,11 @@ public class CreateFragment extends Fragment implements DatePickerDialog.OnDateS
                         R.id.nav_daily, R.id.nav_weekly, R.id.nav_monthly)
                         .setDrawerLayout(drawer)
                         .build();
+<<<<<<< HEAD
                 NavController navController = Navigation.findNavController((AppCompatActivity) getActivity(), R.id.nav_host_fragment);
+=======
+                NavController navController = Navigation.findNavController((AppCompatActivity)getActivity(), R.id.nav_host_fragment);
+>>>>>>> bf6f4794179236a71d4cb1b449662d6c453938cd
                 NavigationUI.navigateUp(navController, mAppBarConfiguration);
             }
         });
@@ -151,11 +184,15 @@ public class CreateFragment extends Fragment implements DatePickerDialog.OnDateS
         mViewModel = new ViewModelProvider(this).get(CreateViewModel.class);
         // TODO: Use the ViewModel
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> bf6f4794179236a71d4cb1b449662d6c453938cd
     public void onDateSet(DatePicker view, int year, int monthOfYear,
                           int dayOfMonth) {
         // do stuff with the date the user selected
     }
+<<<<<<< HEAD
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         // do stuff with the time the user selected
@@ -180,3 +217,9 @@ public class CreateFragment extends Fragment implements DatePickerDialog.OnDateS
 
 }
 
+=======
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        // do stuff with the time the user selected
+    }
+}
+>>>>>>> bf6f4794179236a71d4cb1b449662d6c453938cd

@@ -6,6 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
+<<<<<<< HEAD
+=======
+import android.widget.ProgressBar;
+>>>>>>> bf6f4794179236a71d4cb1b449662d6c453938cd
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -42,8 +46,15 @@ public class DailyFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.daily_fragment, container, false);
+<<<<<<< HEAD
 
         return rootView;
+=======
+        ProgressBar pb=(ProgressBar) rootView.findViewById(R.id.pb);
+        pb.setProgress(75);
+        return rootView;
+        
+>>>>>>> bf6f4794179236a71d4cb1b449662d6c453938cd
     }
 
     @Override
