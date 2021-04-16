@@ -8,18 +8,16 @@
             android:id="@+id/nav_create_goal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-<<<<<<< HEAD
-                <TextView
-=======
 
-                <fragment
-                    android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-                    android:id="@+id/autocomplete_fragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+<!--                <fragment-->
+<!--                    android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"-->
+<!--                    android:id="@+id/autocomplete_fragment"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:visibility="gone"-->
+<!--                    tools:visibility="gone"-->
+<!--                    />-->
                 <TextView
-                    android:layout_below="@id/autocomplete_fragment"
->>>>>>> 187dc0dbf157f80bef57a8f8f2d5a499070dcf1a
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/create_task_text"
@@ -61,13 +59,8 @@
                     android:layout_marginRight="16dp"
                     android:layout_below="@+id/description"
                     android:inputType="text|textAutoCorrect|textMultiLine"
-                    android:id="@+id/location"/>
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> 187dc0dbf157f80bef57a8f8f2d5a499070dcf1a
+                    android:id="@+id/location"
+                    android:focusableInTouchMode="false"/>
                 <LinearLayout
                     android:id="@+id/linear2"
                     android:layout_below="@+id/location"
@@ -75,17 +68,9 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center"
-<<<<<<< HEAD
                     android:weightSum="2"
                     >
 
-=======
-
-                    android:weightSum="2">
-                    >
-
-
->>>>>>> 187dc0dbf157f80bef57a8f8f2d5a499070dcf1a
                         <Button
                             android:id="@+id/date"
                             android:layout_width="0dp"

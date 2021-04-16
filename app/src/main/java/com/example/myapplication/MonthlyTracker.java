@@ -21,7 +21,7 @@ public class MonthlyTracker extends AppCompatActivity {
         calender = (CalendarView)
                 findViewById(R.id.calender);
         date_view = (TextView)
-                findViewById(R.id.date_view);
+                findViewById(R.id.dateView);
 
         calender
                 .setOnDateChangeListener(

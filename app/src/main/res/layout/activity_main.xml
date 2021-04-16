@@ -18,8 +18,4 @@
 
         app:defaultNavHost="true"
         app:navGraph="@navigation/mobile_navigation" />
-<<<<<<< HEAD
-=======
-
->>>>>>> 187dc0dbf157f80bef57a8f8f2d5a499070dcf1a
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,12 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
-<<<<<<< HEAD
-=======
 
 import android.widget.ProgressBar;
 
->>>>>>> 187dc0dbf157f80bef57a8f8f2d5a499070dcf1a
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -49,14 +46,11 @@ public class DailyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.daily_fragment, container, false);
 
-<<<<<<< HEAD
-        return rootView;
-=======
         ProgressBar pb=(ProgressBar) rootView.findViewById(R.id.pb);
+        //TODO: Select # of Complete Activities for Day Out of # of Total Activities. Multiply by 100 and Floor Result. Set Result to pb.
         pb.setProgress(75);
         return rootView;
         
->>>>>>> 187dc0dbf157f80bef57a8f8f2d5a499070dcf1a
     }
 
     @Override

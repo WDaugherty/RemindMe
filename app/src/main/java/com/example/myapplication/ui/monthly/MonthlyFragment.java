@@ -11,13 +11,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
+import android.widget.TextView;
 
 import com.example.myapplication.R;
 
 public class MonthlyFragment extends Fragment {
 
     private MonthlyViewModel mViewModel;
-
+    CalendarView calendar;
+    TextView dateView;
     public static MonthlyFragment newInstance() {
         return new MonthlyFragment();
     }
@@ -25,7 +28,17 @@ public class MonthlyFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.monthly_fragment, container, false);
+        View view = inflater.inflate(R.layout.monthly_fragment, container, false);
+        calendar = view.findViewById(R.id.calender);
+        dateView = view.findViewById(R.id.dateView);
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                String Date = dayOfMonth + "-" + (month + 1) + "-" + year;
+                dateView.setText(Date);
+            }
+        });
+        return view;
     }
 
     @Override
