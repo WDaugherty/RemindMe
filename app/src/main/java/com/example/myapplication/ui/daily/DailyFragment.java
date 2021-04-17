@@ -48,7 +48,7 @@ public class DailyFragment extends Fragment {
 
         ProgressBar pb=(ProgressBar) rootView.findViewById(R.id.pb);
         //TODO: Select # of Complete Activities for Day Out of # of Total Activities. Multiply by 100 and Floor Result. Set Result to pb.
-        pb.setProgress(75);
+        pb.setProgress(33);
         return rootView;
         
     }
