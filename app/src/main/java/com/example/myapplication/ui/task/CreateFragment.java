@@ -7,10 +7,13 @@
 *
 * Contract File:
 *   * Verify Table Columns are With Correct Entry (Some were mixed up, I made changes)
-*   * Convert Date Column to TEXT, unless we find a way to turn the Date object into a INTEGER
+*   * Decide on TEXT or INTEGER for DateTime column. I suggest INTEGER. Methods are psuedo-coded for each below
 *
 * DB Helper:
 *   * Verify that all needed SQL statements exist.
+*
+* Stretch Goals:
+*   * Test DB Retrieval, Set Adapter to Expandable List View to Test Daily View
 * */
 package com.example.myapplication.ui.task;
 
@@ -183,8 +186,16 @@ public class CreateFragment extends Fragment implements DatePickerDialog.OnDateS
 
                 //Set values with values pulled from fields
 
-                //Create java Calendar Instance. Pass In Date and Time Paramaters
+                //Create java Calendar Instance. Pass In Date and Time Parameters, but must convert the global variable to integer
                 //Get Time from Calendar, store in new variable to put in table
+
+                // Alternatively
+
+                //String str = "PUT STRING VERSION OF DATE HERE"; //Concatenate the string global variables into the format on the next line
+                //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                //Date date = df.parse(str);
+                //long epoch = date.getTime(); // Gets time as long epoch, insert into INTEGER column in table
+                //System.out.println(epoch); // 1055545912454
 
                 //Example: May not be exactly correct
                 //values.put(Contract.TaskEntry.COLUMN_NAME_TITLE, str_title);
