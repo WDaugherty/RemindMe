@@ -56,10 +56,8 @@ public class DB_Display extends AppCompatActivity {
                 Contract.TaskEntry.COLUMN_NAME_TITLE,
                 Contract.TaskEntry.COLUMN_NAME_DESCRIPTION,
                 Contract.TaskEntry.COLUMN_NAME_LOCATION,
-                Contract.TaskEntry.COLUMN_NAME_START_TIME,
-                Contract.TaskEntry.COLUMN_NAME_START_DATE,
-                Contract.TaskEntry.COLUMN_NAME_END_DATE,
-                Contract.TaskEntry.COLUMN_NAME_END_TIME,
+                Contract.TaskEntry.COLUMN_NAME_DATE_TIME,
+                Contract.TaskEntry.COLUMN_NAME_COMPLETED
         };
 
         //now going to call method to return cursor
@@ -70,7 +68,7 @@ public class DB_Display extends AppCompatActivity {
                 null, //values for where
                 null, //Group By, null is no group by
                 null, //Having, null says return all rows
-                Contract.TaskEntry.COLUMN_NAME_END_DATE + " ASC" //names in alpabetical order
+                Contract.TaskEntry.COLUMN_NAME_DATE_TIME + " ASC" //names in alphabetical order
         );
 
 

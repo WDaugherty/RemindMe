@@ -1,3 +1,17 @@
+/*
+* Things to work on 4/24:
+* This File:
+*   * On Date Set Function
+*   * On Time Set Function
+*   * On Save Click Function
+*
+* Contract File:
+*   * Verify Table Columns are With Correct Entry (Some were mixed up, I made changes)
+*   * Convert Date Column to TEXT, unless we find a way to turn the Date object into a INTEGER
+*
+* DB Helper:
+*   * Verify that all needed SQL statements exist.
+* */
 package com.example.myapplication.ui.task;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,6 +59,8 @@ import android.widget.Toast;
 import android.widget.TimePicker;
 
 
+import com.example.myapplication.Contract;
+import com.example.myapplication.DB_Helper;
 import com.example.myapplication.DatePickerFragment;
 import com.example.myapplication.R;
 import com.example.myapplication.TimePickerFragment;
@@ -59,17 +75,26 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.material.navigation.NavigationView;
 
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
+import java.util.zip.Inflater;
 
 public class CreateFragment extends Fragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
+    public static String str_title;
+    public static String str_description;
+    public static String str_location;
+    public static String str_endDate;
+    public static Timestamp unix;
+    public static String str_endTime;
+    public static String JDBC;
     private CreateViewModel mViewModel;
 
-    EditText location;
+    public EditText title, location, description;
     PlacesClient placesClient;
-    int startYear, startMonth, startDay;
-    int endYear, endMonth, endDay;
+    public int startYear, startMonth, startDay;
+    public int endYear, endMonth, endDay;
     private AppBarConfiguration mAppBarConfiguration;
     private static int AUTOCOMPLETE_REQUEST_CODE = 1;
     @Override
@@ -86,14 +111,15 @@ public class CreateFragment extends Fragment implements DatePickerDialog.OnDateS
         List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS);
 
         // Start the autocomplete intent.
-
+        title = (EditText) view.findViewById(R.id.title);
 
 //        final AutocompleteSupportFragment autocompleteSupportFragment =
 //                (AutocompleteSupportFragment) getChildFragmentManager().findFragmentById(R.id.autocomplete_fragment);
         location = (EditText) view.findViewById(R.id.location);
-        location.setOnClickListener(new View.OnClickListener() {
+        location.setOnClickListener(new View.OnClickListener() { // On click of location field
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { // Fully functioning, no change needed
+                // Launch the Places API via an intent using OVERLAY mode
                 Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
                         .build(getContext());
                 startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
@@ -110,26 +136,26 @@ public class CreateFragment extends Fragment implements DatePickerDialog.OnDateS
         discard = view.findViewById(R.id.discard);
         save = view.findViewById(R.id.save_task);
 
-        endDate.setOnClickListener(new View.OnClickListener() {
+        endDate.setOnClickListener(new View.OnClickListener() { // Fully functioning, no change needed
 
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                FragmentTransaction ft = getParentFragmentManager().beginTransaction();
                 DialogFragment endDateFragment = new DatePickerFragment(CreateFragment.this);
                 endDateFragment.show(ft, "dialog");
             }
         });
 
-        endTime.setOnClickListener(new View.OnClickListener() {
+        endTime.setOnClickListener(new View.OnClickListener() { // Fully functioning, no change needed
 
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                FragmentTransaction ft = getParentFragmentManager().beginTransaction();
                 DialogFragment endTimeFragment = new TimePickerFragment(CreateFragment.this);
                 endTimeFragment.show(ft, "dialog");
             }
         });
-        discard.setOnClickListener(new View.OnClickListener() {
+        discard.setOnClickListener(new View.OnClickListener() { // Fully functioning, no change needed
 
             @Override
             public void onClick(View v) {
@@ -151,15 +177,30 @@ public class CreateFragment extends Fragment implements DatePickerDialog.OnDateS
 
             @Override
             public void onClick(View v) {
-                // Verify forms are filled
-                // Execute SQL insertion
+                //DB_Helper myDbHelper = new DB_Helper(getActivity().getApplicationContext());
+                //SQLiteDatabase db = myDbHelper.getWritableDatabase();
+                //ContentValues values = new ContentValues();
+
+                //Set values with values pulled from fields
+
+                //Create java Calendar Instance. Pass In Date and Time Paramaters
+                //Get Time from Calendar, store in new variable to put in table
+
+                //Example: May not be exactly correct
+                //values.put(Contract.TaskEntry.COLUMN_NAME_TITLE, str_title);
+                //values.put(Contract.TaskEntry.COLUMN_NAME_DESCRIPTION, str_description);
+                //values.put(Contract.TaskEntry.COLUMN_NAME_LOCATION, str_location);
+                //values.put(Contract.TaskEntry.COLUMN_NAME_DATE_TIME, (int) unix);
+                //values.put(Contract.TaskEntry.COLUMN_NAME_COMPLETED, 0);
+
+                //Execute Insertion
             }
         });
         return view;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) { // Fully functioning, no change needed
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(CreateViewModel.class);
         // TODO: Use the ViewModel
@@ -167,14 +208,19 @@ public class CreateFragment extends Fragment implements DatePickerDialog.OnDateS
     public void onDateSet(DatePicker view, int year, int monthOfYear,
                           int dayOfMonth) {
         // do stuff with the date the user selected
+
+        //Store date values in global variables
     }
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         // do stuff with the time the user selected
+
+        //Store time values in global variables
+
     }
 
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) { // Fully functioning, no change needed
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 Place place = Autocomplete.getPlaceFromIntent(data);

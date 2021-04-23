@@ -4,29 +4,20 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal" >
-
-    <LinearLayout
-        android:layout_width="52dp"
-        android:layout_height="52dp"
-        android:orientation="vertical" >
-
-        <ImageView
-            android:id="@+id/photo"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/app_name"
-            android:fitsSystemWindows="true" />
-
-    </LinearLayout>
+    
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:orientation="vertical" >
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="2">
         <TextView
             android:id="@+id/listTitle"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:paddingLeft="6dip"
@@ -34,8 +25,16 @@
             android:textColor="#CC0000"
             android:textSize="20dp"
             android:textStyle="bold"
-            tools:ignore="SpUsage" />
-
+            tools:ignore="SpUsage"
+            android:layout_weight="1.8"
+            android:paddingStart="6dip" />
+<!--            <Button-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/task_options"-->
+<!--                android:text="Options"-->
+<!--                android:layout_weight="0.2"/>-->
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

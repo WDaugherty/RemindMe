@@ -1,17 +1,21 @@
 package com.example.myapplication.ui.daily;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 
 import android.widget.ProgressBar;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -49,6 +53,9 @@ public class DailyFragment extends Fragment {
         ProgressBar pb=(ProgressBar) rootView.findViewById(R.id.pb);
         //TODO: Select # of Complete Activities for Day Out of # of Total Activities. Multiply by 100 and Floor Result. Set Result to pb.
         pb.setProgress(33);
+        //ExpandableListView expListView = (ExpandableListView) rootView.findViewById(R.id.expandableListView);
+
+
         return rootView;
         
     }
@@ -61,9 +68,10 @@ public class DailyFragment extends Fragment {
         lv.setAdapter(new ExpandableListAdapter(groups, children));
         lv.setGroupIndicator(null);
 
+
     }
 
-    public class ExpandableListAdapter extends BaseExpandableListAdapter {
+    public class ExpandableListAdapter extends BaseExpandableListAdapter implements ExpandableListView.OnGroupClickListener {
 
         private final LayoutInflater inf;
         private String[] groups;
@@ -151,6 +159,35 @@ public class DailyFragment extends Fragment {
         @Override
         public boolean isChildSelectable(int groupPosition, int childPosition) {
             return true;
+        }
+
+        @Override
+        public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+            parent.smoothScrollToPosition(groupPosition);
+
+            if (parent.isGroupExpanded(groupPosition)) {
+                parent.collapseGroup(groupPosition);
+            } else {
+                parent.expandGroup(groupPosition);
+            }
+//            Button options = (Button) rootView.findViewById(R.id.task_options);
+//            options.setOnClickListener( new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    final CharSequence[] items = {"Red", "Green", "Blue"};
+//
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//                    builder.setTitle("Pick a color");
+//                    builder.setItems(items, new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int item) {
+//                            Toast.makeText(getActivity().getApplicationContext(), items[item], Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//                    AlertDialog alert = builder.create();
+//                    alert.show();
+//                }
+//            });
+            return false;
         }
 
         private class ViewHolder {
