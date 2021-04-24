@@ -26,7 +26,7 @@ public class DB_Helper extends SQLiteOpenHelper {
             Contract.GoalEntry.COLUMN_NAME_START_DATE_TIME + "INTEGER" + COMMA_SEP +
             Contract.GoalEntry.COLUMN_NAME_END_DATE_TIME + " INTEGER" + COMMA_SEP +
             Contract.GoalEntry.COLUMN_NAME_COMPLETED + " INTEGER" +
-            Contract.GoalEntry.COLUMN_NAME_TASK + " INTEGER,"+ " FOREIGN KEY (task) REFERENCES task (_ID)" +
+            Contract.GoalEntry.COLUMN_NAME_TASK_ID + " INTEGER,"+ " FOREIGN KEY (task) REFERENCES task (_ID)" +
 
             ")";
     private static final String SQL_DROP_TASK = "DROP TABLE IF EXISTS " + Contract.TaskEntry.TABLE_NAME;
