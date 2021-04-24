@@ -8,6 +8,7 @@
 * Contract File:
 *   * Verify Table Columns are With Correct Entry (Some were mixed up, I made changes)
 *   * Decide on TEXT or INTEGER for DateTime column. I suggest INTEGER. Methods are psuedo-coded for each below
+    UPDATE: Verified table columns and decieded on text for datetime, this is subject to change.
 *
 * DB Helper:
 *   * Verify that all needed SQL statements exist.
