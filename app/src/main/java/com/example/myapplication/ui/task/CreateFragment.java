@@ -220,7 +220,7 @@ public class CreateFragment extends Fragment implements DatePickerDialog.OnDateS
     public void onDateSet(DatePicker view, int year, int monthOfYear,
                           int dayOfMonth) {
         // do stuff with the date the user selected
-
+        
         //Store date values in global variables
     }
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
