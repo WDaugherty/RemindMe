@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    // Comment 
+    // This is the xml layout for the daily view of the activities you have for each day. 
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
