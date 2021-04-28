@@ -1,6 +1,8 @@
 //Version and UTF control
 <?xml version="1.0" encoding="utf-8"?>
 
+//This is the xml code that creates our progress bar to track tasks completed.
+
 //Linear layout 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
