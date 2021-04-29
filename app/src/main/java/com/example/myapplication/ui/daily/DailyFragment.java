@@ -1,3 +1,4 @@
+//Ask what everything does in this
 package com.example.myapplication.ui.daily;
 
 import android.content.DialogInterface;
@@ -25,6 +26,9 @@ public class DailyFragment extends Fragment {
     private DailyViewModel mViewModel;
     View rootView;
     ExpandableListView lv;
+    
+    //declaration of arrays
+    
     private String[] groups;
     private String[][] children;
 
@@ -35,7 +39,9 @@ public class DailyFragment extends Fragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        
+        //adds the text into the arrays created above
+        
         groups = new String[] { "Test Header 1", "Test Header 2", "Test Header 3", "Test Header 4" };
 
         children = new String [][] {
@@ -73,10 +79,12 @@ public class DailyFragment extends Fragment {
 
     public class ExpandableListAdapter extends BaseExpandableListAdapter implements ExpandableListView.OnGroupClickListener {
 
+        //declaration of variables
+        
         private final LayoutInflater inf;
         private String[] groups;
         private String[][] children;
-
+        //creates expanable list adapter method
         public ExpandableListAdapter(String[] groups, String[][] children) {
             this.groups = groups;
             this.children = children;
@@ -84,6 +92,7 @@ public class DailyFragment extends Fragment {
         }
 
         @Override
+        //get me
         public int getGroupCount() {
             return groups.length;
         }
