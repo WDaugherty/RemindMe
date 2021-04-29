@@ -30,6 +30,7 @@ import android.app.DatePickerDialog;
 import android.app.Instrumentation;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -46,6 +47,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 
 import android.view.LayoutInflater;
@@ -80,6 +83,8 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.zip.Inflater;
 
@@ -93,7 +98,7 @@ public class CreateFragment extends Fragment implements DatePickerDialog.OnDateS
     public static String str_endTime;
     public static String JDBC;
     private CreateViewModel mViewModel;
-
+    private int year_g, month, day, hour, minute_g;
     public EditText title, location, description;
     PlacesClient placesClient;
     public int startYear, startMonth, startDay;
@@ -130,7 +135,7 @@ public class CreateFragment extends Fragment implements DatePickerDialog.OnDateS
 
 
         });
-
+        description = (EditText) view.findViewById(R.id.description);
 
         Button startDate, startTime, endDate, endTime, discard, save;
 
@@ -178,35 +183,79 @@ public class CreateFragment extends Fragment implements DatePickerDialog.OnDateS
         });
         save.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                //DB_Helper myDbHelper = new DB_Helper(getActivity().getApplicationContext());
-                //SQLiteDatabase db = myDbHelper.getWritableDatabase();
-                //ContentValues values = new ContentValues();
+                                    @Override
+                                    public void onClick(View v) {
+                                        DB_Helper myDbHelper = new DB_Helper(getActivity().getApplicationContext());
+                                        SQLiteDatabase db = myDbHelper.getWritableDatabase();
+                                        ContentValues values = new ContentValues();
+                                        View vue = LayoutInflater.from(getContext()).inflate(R.layout.fragment_create_task, null);
+                                        //Set values with values pulled from fields
 
-                //Set values with values pulled from fields
+                                        //Create java Calendar Instance. Pass In Date and Time Parameters, but must convert the global variable to integer
+                                        //Get Time from Calendar, store in new variable to put in table
 
-                //Create java Calendar Instance. Pass In Date and Time Parameters, but must convert the global variable to integer
-                //Get Time from Calendar, store in new variable to put in table
+                                        // Alternatively
 
-                // Alternatively
+                                        //String str = "PUT STRING VERSION OF DATE HERE"; //Concatenate the string global variables into the format on the next line
+                                        //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                                        //Date date = df.parse(str);
+                                        //long epoch = date.getTime(); // Gets time as long epoch, insert into INTEGER column in table
+                                        //System.out.println(epoch); // 1055545912454
 
-                //String str = "PUT STRING VERSION OF DATE HERE"; //Concatenate the string global variables into the format on the next line
-                //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                //Date date = df.parse(str);
-                //long epoch = date.getTime(); // Gets time as long epoch, insert into INTEGER column in table
-                //System.out.println(epoch); // 1055545912454
+                                        //Example: May not be exactly correct
+                                        //values.put(Contract.TaskEntry.COLUMN_NAME_TITLE, str_title);
+                                        //values.put(Contract.TaskEntry.COLUMN_NAME_DESCRIPTION, str_description);
+                                        //values.put(Contract.TaskEntry.COLUMN_NAME_LOCATION, str_location);
+                                        //values.put(Contract.TaskEntry.COLUMN_NAME_DATE_TIME, (int) unix);
+                                        //values.put(Contract.TaskEntry.COLUMN_NAME_COMPLETED, 0);
 
-                //Example: May not be exactly correct
-                //values.put(Contract.TaskEntry.COLUMN_NAME_TITLE, str_title);
-                //values.put(Contract.TaskEntry.COLUMN_NAME_DESCRIPTION, str_description);
-                //values.put(Contract.TaskEntry.COLUMN_NAME_LOCATION, str_location);
-                //values.put(Contract.TaskEntry.COLUMN_NAME_DATE_TIME, (int) unix);
-                //values.put(Contract.TaskEntry.COLUMN_NAME_COMPLETED, 0);
+                                        //Execute Insertion
+                                        Calendar cal = Calendar.getInstance();
+                                        cal.set(Calendar.YEAR, year_g);
+                                        cal.set(Calendar.MONTH, month);
+                                        cal.set(Calendar.DAY_OF_MONTH, day);
+                                        cal.set(Calendar.HOUR_OF_DAY, hour);
+                                        cal.set(Calendar.MINUTE, minute_g);
+                                        long millis = cal.getTimeInMillis();
+                                        Context context = getActivity().getApplicationContext();
+                                        int duration = Toast.LENGTH_SHORT;
 
-                //Execute Insertion
-            }
-        });
+                                        Toast toast = Toast.makeText(context, String.valueOf(millis), duration);
+                                        toast.show();
+
+                                        String str_title = title.getText().toString();
+                                        //EditText desc = vue.findViewById(R.id.location);
+                                        String str_description =  description.getText().toString();
+
+                                        values.put(Contract.TaskEntry.COLUMN_NAME_TITLE, str_title);
+                                        values.put(Contract.TaskEntry.COLUMN_NAME_DESCRIPTION, str_description);
+                                        values.put(Contract.TaskEntry.COLUMN_NAME_LOCATION, str_location);
+                                        values.put(Contract.TaskEntry.COLUMN_NAME_DATE_TIME, millis);
+                                        values.put(Contract.TaskEntry.COLUMN_NAME_COMPLETED, 0);
+
+                                        long newRowId = db.insert(
+                                                Contract.TaskEntry.TABLE_NAME,  //table name for insert
+                                                null,  //null is all columns
+                                                values);  //values for the insert
+                                        duration = Toast.LENGTH_LONG;
+                                        String result;
+                                        if (newRowId != -1)
+                                        {
+                                            result = "New Person Created!";
+                                        }
+
+                                        else
+                                        {
+                                            result = "ERORR";
+                                        }
+
+                                        //show the toast
+                                        toast = Toast.makeText(getActivity().getApplicationContext(), result, duration);
+                                        toast.show();
+                                    }
+                                });
+
+
         return view;
     }
 
@@ -221,12 +270,17 @@ public class CreateFragment extends Fragment implements DatePickerDialog.OnDateS
         // do stuff with the date the user selected
 
         //Store date values in global variables
+        year_g = year;
+        month = monthOfYear;
+        day = dayOfMonth;
+
     }
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         // do stuff with the time the user selected
 
         //Store time values in global variables
-
+        hour = hourOfDay;
+        minute_g = minute;
     }
 
 
@@ -236,7 +290,7 @@ public class CreateFragment extends Fragment implements DatePickerDialog.OnDateS
             if (resultCode == Activity.RESULT_OK) {
                 Place place = Autocomplete.getPlaceFromIntent(data);
                 Log.i("PlacesApi", "Place: " + place.getName() + ", " + place.getId());
-
+                str_location = place.getName() + ", " + place.getAddress();
                 location.setText(place.getName() + ", " + place.getAddress());
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 // TODO: Handle the error.

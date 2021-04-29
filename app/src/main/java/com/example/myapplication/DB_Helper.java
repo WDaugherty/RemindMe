@@ -10,9 +10,9 @@ public class DB_Helper extends SQLiteOpenHelper {
     //Defines the database
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "remindme.db";
-    private static final String COMMA_SEP =",";
+    private static final String COMMA_SEP =", ";
     private static final String TEXT_TYPE = " TEXT";
-    private static final String SQL_CREATE_TASK = "CREATE TABLE " + Contract.GoalEntry.TABLE_NAME + " (" +
+    private static final String SQL_CREATE_TASK = "CREATE TABLE " + Contract.TaskEntry.TABLE_NAME + " (" +
             Contract.TaskEntry._ID + "INTEGER PRIMARY KEY" + COMMA_SEP+
             Contract.TaskEntry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP+
             Contract.TaskEntry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE + COMMA_SEP+
@@ -20,14 +20,14 @@ public class DB_Helper extends SQLiteOpenHelper {
             Contract.TaskEntry.COLUMN_NAME_DATE_TIME + " INTEGER" + COMMA_SEP +
             Contract.TaskEntry.COLUMN_NAME_COMPLETED + " INTEGER" +
             ")";
-    private static final String SQL_CREATE_GOAL = "CREATE TABLE " + Contract.TaskEntry.TABLE_NAME + " (" +
-            Contract.GoalEntry._ID + "INTEGER PRIMARY KEY" + COMMA_SEP+
+    private static final String SQL_CREATE_GOAL = "CREATE TABLE " + Contract.GoalEntry.TABLE_NAME + " (" +
+            Contract.GoalEntry._ID + " INTEGER PRIMARY KEY" + COMMA_SEP+
             Contract.GoalEntry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP+
-            Contract.GoalEntry.COLUMN_NAME_START_DATE_TIME + "INTEGER" + COMMA_SEP +
+            Contract.GoalEntry.COLUMN_NAME_START_DATE_TIME + " INTEGER" + COMMA_SEP +
             Contract.GoalEntry.COLUMN_NAME_END_DATE_TIME + " INTEGER" + COMMA_SEP +
-            Contract.GoalEntry.COLUMN_NAME_COMPLETED + " INTEGER" +
-            Contract.GoalEntry.COLUMN_NAME_TASK + " INTEGER,"+ " FOREIGN KEY (task) REFERENCES task (_ID)" +
-
+            Contract.GoalEntry.COLUMN_NAME_COMPLETED + " INTEGER" + COMMA_SEP +
+            Contract.GoalEntry.COLUMN_NAME_TASK + " INTEGER"+ COMMA_SEP +
+            " FOREIGN KEY ("+Contract.GoalEntry.COLUMN_NAME_TASK+") REFERENCES "+Contract.TaskEntry.TABLE_NAME+"("+(Contract.TaskEntry._ID)+")"+
             ")";
     private static final String SQL_DROP_TASK = "DROP TABLE IF EXISTS " + Contract.TaskEntry.TABLE_NAME;
     private static final String SQL_DROP_GOAL = "DROP TABLE IF EXISTS " + Contract.GoalEntry.TABLE_NAME;
