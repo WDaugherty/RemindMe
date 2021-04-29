@@ -5,7 +5,10 @@ import android.provider.BaseColumns;
 public final class Contract {
     public Contract( ){
 
+      
     }
+    //creates an abstract class that stores all of the componenets of tasks
+    
     public static abstract class TaskEntry implements BaseColumns{
         public static final String TABLE_NAME ="task";
         public static final String COLUMN_NAME_TITLE = "title";
@@ -15,7 +18,8 @@ public final class Contract {
         public static final String COLUMN_NAME_COMPLETED = "completed";
 
     }
-
+    //creates an abstract class that gives all of the components of goals
+    
     public static abstract class GoalEntry implements BaseColumns{
         public static final String TABLE_NAME = "goal";
         public static final String COLUMN_NAME_TITLE = "title";

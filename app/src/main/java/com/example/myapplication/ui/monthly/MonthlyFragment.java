@@ -34,6 +34,8 @@ public class MonthlyFragment extends Fragment {
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                //sets the date
+                
                 String Date = dayOfMonth + "-" + (month + 1) + "-" + year;
                 dateView.setText(Date);
             }

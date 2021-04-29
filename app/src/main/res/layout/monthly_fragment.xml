@@ -1,16 +1,21 @@
+//Version and UTF Control 
 <?xml version="1.0" encoding="utf-8"?>
+
+//Adds in a frame layout
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.monthly.MonthlyFragment">
+ 
+    //Adds a textview for Monthly header
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="Monthly" />
 
-    <!-- Add TextView to display the date -->
+   //Adds in a textview to disply the date
     <TextView
         android:id="@+id/dateView"
         android:layout_width="match_parent"
@@ -21,7 +26,8 @@
         android:textColor="@android:color/background_dark"
         android:textStyle="bold" />
 
-    <!-- Add CalenderView to display the Calender -->
+   
+    //Adds in a calendar view to implement and display a calendar
     <CalendarView
         android:id="@+id/calender"
         android:layout_marginTop="80dp"

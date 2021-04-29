@@ -16,6 +16,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+//picks a date for when a goal/task will be completed
+
 public class DatePickerFragment extends DialogFragment {
     private Fragment mFragment;
 

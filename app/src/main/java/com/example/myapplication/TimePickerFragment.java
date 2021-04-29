@@ -17,6 +17,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+//fragment of code used for picking the time a goal/task will be completed
+
 public class TimePickerFragment extends DialogFragment {
     private Fragment mFragment;
 
