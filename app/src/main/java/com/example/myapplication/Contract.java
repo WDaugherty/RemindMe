@@ -25,7 +25,7 @@ public final class Contract {
         public static final String COLUMN_NAME_TITLE = "title";
         public static final String COLUMN_NAME_START_DATE_TIME = "start_datetime";
         public static final String COLUMN_NAME_END_DATE_TIME = "end_datetime";
-        public static final String COLUMN_NAME_TASK = "task_id";
+        public static final String COLUMN_NAME_TASK_ID = "task_id";
         public static final String COLUMN_NAME_COMPLETED = "completed";
     }
 }

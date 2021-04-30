@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -25,15 +26,11 @@ public class DB_Helper extends SQLiteOpenHelper {
             Contract.GoalEntry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP+
             Contract.GoalEntry.COLUMN_NAME_START_DATE_TIME + " INTEGER" + COMMA_SEP +
             Contract.GoalEntry.COLUMN_NAME_END_DATE_TIME + " INTEGER" + COMMA_SEP +
-<<<<<<< HEAD
             Contract.GoalEntry.COLUMN_NAME_COMPLETED + " INTEGER" + COMMA_SEP +
-            Contract.GoalEntry.COLUMN_NAME_TASK + " INTEGER"+ COMMA_SEP +
-            " FOREIGN KEY ("+Contract.GoalEntry.COLUMN_NAME_TASK+") REFERENCES "+Contract.TaskEntry.TABLE_NAME+"("+(Contract.TaskEntry._ID)+")"+
-=======
+            Contract.GoalEntry.COLUMN_NAME_TASK_ID + " INTEGER"+ COMMA_SEP +
+            " FOREIGN KEY ("+Contract.GoalEntry.COLUMN_NAME_TASK_ID+") REFERENCES "+Contract.TaskEntry.TABLE_NAME+"("+Contract.TaskEntry._ID+") "+ COMMA_SEP +
             Contract.GoalEntry.COLUMN_NAME_COMPLETED + " INTEGER" +
             Contract.GoalEntry.COLUMN_NAME_TASK_ID + " INTEGER,"+ " FOREIGN KEY (task) REFERENCES task (_ID)" +
-
->>>>>>> eee038ec1f78d6def8f71a80a28cd8f943b42c3f
             ")";
     private static final String SQL_DROP_TASK = "DROP TABLE IF EXISTS " + Contract.TaskEntry.TABLE_NAME;
     private static final String SQL_DROP_GOAL = "DROP TABLE IF EXISTS " + Contract.GoalEntry.TABLE_NAME;
@@ -55,6 +52,16 @@ public class DB_Helper extends SQLiteOpenHelper {
 
     public DB_Helper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
+    }
+
+    public static Cursor fetchGroup(SQLiteDatabase db) {
+        String query = "SELECT * FROM task";
+        return db.rawQuery(query, null);
+    }
+
+    public static Cursor fetchChildren(String task, SQLiteDatabase db) {
+        String query = "SELECT * FROM GoalEntry WHERE task_id = '" + task + "'";
+        return db.rawQuery(query, null);
     }
 
     //need constructor with just context...

@@ -189,7 +189,6 @@ public class CreateFragment extends Fragment implements DatePickerDialog.OnDateS
                                         DB_Helper myDbHelper = new DB_Helper(getActivity().getApplicationContext());
                                         SQLiteDatabase db = myDbHelper.getWritableDatabase();
                                         ContentValues values = new ContentValues();
-                                        View vue = LayoutInflater.from(getContext()).inflate(R.layout.fragment_create_task, null);
                                         //Set values with values pulled from fields
 
                                         //Create java Calendar Instance. Pass In Date and Time Parameters, but must convert the global variable to integer

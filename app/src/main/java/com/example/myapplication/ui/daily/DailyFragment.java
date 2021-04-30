@@ -1,7 +1,10 @@
 //Ask what everything does in this
 package com.example.myapplication.ui.daily;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +15,7 @@ import android.widget.ExpandableListView;
 
 import android.widget.ProgressBar;
 
+import android.widget.SimpleCursorTreeAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,13 +24,17 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.myapplication.DB_Helper;
 import com.example.myapplication.R;
 
 public class DailyFragment extends Fragment {
     private DailyViewModel mViewModel;
     View rootView;
     ExpandableListView lv;
-    
+    Cursor mGroupsCursor;
+    private Cursor taskCursor;
+    private Cursor goalCursor;
+    MyExpandableListAdapter mAdapter;
     //declaration of arrays
     
     private String[] groups;
@@ -59,8 +67,10 @@ public class DailyFragment extends Fragment {
         ProgressBar pb=(ProgressBar) rootView.findViewById(R.id.pb);
         //TODO: Select # of Complete Activities for Day Out of # of Total Activities. Multiply by 100 and Floor Result. Set Result to pb.
         pb.setProgress(33);
-        //ExpandableListView expListView = (ExpandableListView) rootView.findViewById(R.id.expandableListView);
-
+        ExpandableListView expListView = (ExpandableListView) rootView.findViewById(R.id.expandableListView);
+        DB_Helper mDbHelper = new DB_Helper(getActivity());
+        //mDbHelper.open();
+        fillData();
 
         return rootView;
         
@@ -71,144 +81,184 @@ public class DailyFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         lv = (ExpandableListView) view.findViewById(R.id.expandableListView);
-        lv.setAdapter(new ExpandableListAdapter(groups, children));
-        lv.setGroupIndicator(null);
+//        lv.setAdapter(new ExpandableListAdapter(groups, children));
+//        lv.setGroupIndicator(null);
+
 
 
     }
+    private void fillData() {
+        DB_Helper dbHelper = new DB_Helper(getActivity().getApplicationContext());
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        taskCursor = DB_Helper.fetchGroup(db);
+        getActivity().startManagingCursor(taskCursor);
+        taskCursor.moveToFirst();
+        View view = getLayoutInflater().inflate(R.layout.daily_fragment, null);
+        ExpandableListView expListView = (ExpandableListView) view.findViewById(R.id.expandableListView);
 
-    public class ExpandableListAdapter extends BaseExpandableListAdapter implements ExpandableListView.OnGroupClickListener {
+        mAdapter = new MyExpandableListAdapter(taskCursor, getActivity(),
+                R.layout.list_group,                     // Your row layout for a group
+                R.layout.list_item,                 // Your row layout for a child
+                new String[] { "task_id" },                      // Field(s) to use from group cursor
+                new int[] { R.id.listTitle },                 // Widget ids to put group data into
+                new String[] { "title", },  // Field(s) to use from child cursors
+                new int[] { R.id.item1, });          // Widget ids to put child data into
+        lv = (ExpandableListView) view.findViewById(R.id.expandableListView);
 
-        //declaration of variables
-        
-        private final LayoutInflater inf;
-        private String[] groups;
-        private String[][] children;
-        //creates expanable list adapter method
-        public ExpandableListAdapter(String[] groups, String[][] children) {
-            this.groups = groups;
-            this.children = children;
-            inf = LayoutInflater.from(getActivity());
-        }
+        lv.setAdapter(mAdapter);                         // set the list adapter.
+    }
 
-        @Override
-        //get me
-        public int getGroupCount() {
-            return groups.length;
-        }
-
-        @Override
-        public int getChildrenCount(int groupPosition) {
-            return children[groupPosition].length;
-        }
-
-        @Override
-        public Object getGroup(int groupPosition) {
-            return groups[groupPosition];
-        }
-
-        @Override
-        public Object getChild(int groupPosition, int childPosition) {
-            return children[groupPosition][childPosition];
-        }
-
-        @Override
-        public long getGroupId(int groupPosition) {
-            return groupPosition;
-        }
-
-        @Override
-        public long getChildId(int groupPosition, int childPosition) {
-            return childPosition;
-        }
-
-        @Override
-        public boolean hasStableIds() {
-            return true;
-        }
-
-        @Override
-        public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-
-            ViewHolder holder;
-            if (convertView == null) {
-                convertView = inf.inflate(R.layout.list_item, parent, false);
-                holder = new ViewHolder();
-
-                holder.text = (TextView) convertView.findViewById(R.id.item1);
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-
-            holder.text.setText(getChild(groupPosition, childPosition).toString());
-
-            return convertView;
-        }
-
-        @Override
-        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-            ViewHolder holder;
-
-            if (convertView == null) {
-                convertView = inf.inflate(R.layout.list_group, parent, false);
-
-                holder = new ViewHolder();
-                holder.text = (TextView) convertView.findViewById(R.id.listTitle);
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-
-            holder.text.setText(getGroup(groupPosition).toString());
-
-            return convertView;
-        }
-
-        @Override
-        public boolean isChildSelectable(int groupPosition, int childPosition) {
-            return true;
-        }
-
-        @Override
-        public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-            parent.smoothScrollToPosition(groupPosition);
-
-            if (parent.isGroupExpanded(groupPosition)) {
-                parent.collapseGroup(groupPosition);
-            } else {
-                parent.expandGroup(groupPosition);
-            }
-//            Button options = (Button) rootView.findViewById(R.id.task_options);
-//            options.setOnClickListener( new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    final CharSequence[] items = {"Red", "Green", "Blue"};
+//    public class ExpandableListAdapter extends BaseExpandableListAdapter implements ExpandableListView.OnGroupClickListener {
 //
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-//                    builder.setTitle("Pick a color");
-//                    builder.setItems(items, new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int item) {
-//                            Toast.makeText(getActivity().getApplicationContext(), items[item], Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//                    AlertDialog alert = builder.create();
-//                    alert.show();
-//                }
-//            });
-            return false;
-        }
-
-        private class ViewHolder {
-            TextView text;
-        }
-    }
-
+//        //declaration of variables
+//
+//        private final LayoutInflater inf;
+//        private String[] groups;
+//        private String[][] children;
+//        //creates expanable list adapter method
+//        public ExpandableListAdapter(String[] groups, String[][] children) {
+//            this.groups = groups;
+//            this.children = children;
+//            inf = LayoutInflater.from(getActivity());
+//        }
+//
+//        @Override
+//        //get me
+//        public int getGroupCount() {
+//            return groups.length;
+//        }
+//
+//        @Override
+//        public int getChildrenCount(int groupPosition) {
+//            return children[groupPosition].length;
+//        }
+//
+//        @Override
+//        public Object getGroup(int groupPosition) {
+//            return groups[groupPosition];
+//        }
+//
+//        @Override
+//        public Object getChild(int groupPosition, int childPosition) {
+//            return children[groupPosition][childPosition];
+//        }
+//
+//        @Override
+//        public long getGroupId(int groupPosition) {
+//            return groupPosition;
+//        }
+//
+//        @Override
+//        public long getChildId(int groupPosition, int childPosition) {
+//            return childPosition;
+//        }
+//
+//        @Override
+//        public boolean hasStableIds() {
+//            return true;
+//        }
+//
+//        @Override
+//        public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+//
+//            ViewHolder holder;
+//            if (convertView == null) {
+//                convertView = inf.inflate(R.layout.list_item, parent, false);
+//                holder = new ViewHolder();
+//
+//                holder.text = (TextView) convertView.findViewById(R.id.item1);
+//                convertView.setTag(holder);
+//            } else {
+//                holder = (ViewHolder) convertView.getTag();
+//            }
+//
+//            holder.text.setText(getChild(groupPosition, childPosition).toString());
+//
+//            return convertView;
+//        }
+//
+//        @Override
+//        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+//            ViewHolder holder;
+//
+//            if (convertView == null) {
+//                convertView = inf.inflate(R.layout.list_group, parent, false);
+//
+//                holder = new ViewHolder();
+//                holder.text = (TextView) convertView.findViewById(R.id.listTitle);
+//                convertView.setTag(holder);
+//            } else {
+//                holder = (ViewHolder) convertView.getTag();
+//            }
+//
+//            holder.text.setText(getGroup(groupPosition).toString());
+//
+//            return convertView;
+//        }
+//
+//        @Override
+//        public boolean isChildSelectable(int groupPosition, int childPosition) {
+//            return true;
+//        }
+//
+//        @Override
+//        public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+//            parent.smoothScrollToPosition(groupPosition);
+//
+//            if (parent.isGroupExpanded(groupPosition)) {
+//                parent.collapseGroup(groupPosition);
+//            } else {
+//                parent.expandGroup(groupPosition);
+//            }
+////            Button options = (Button) rootView.findViewById(R.id.task_options);
+////            options.setOnClickListener( new View.OnClickListener() {
+////                @Override
+////                public void onClick(View v) {
+////                    final CharSequence[] items = {"Red", "Green", "Blue"};
+////
+////                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+////                    builder.setTitle("Pick a color");
+////                    builder.setItems(items, new DialogInterface.OnClickListener() {
+////                        public void onClick(DialogInterface dialog, int item) {
+////                            Toast.makeText(getActivity().getApplicationContext(), items[item], Toast.LENGTH_SHORT).show();
+////                        }
+////                    });
+////                    AlertDialog alert = builder.create();
+////                    alert.show();
+////                }
+////            });
+//            return false;
+//        }
+//
+//        private class ViewHolder {
+//            TextView text;
+//        }
+//    }
+//
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(DailyViewModel.class);
         // TODO: Use the ViewModel
     }
+    public class MyExpandableListAdapter extends SimpleCursorTreeAdapter {
+        public MyExpandableListAdapter(Cursor cursor, Context context, int groupLayout,
+                                       int childLayout, String[] groupFrom, int[] groupTo, String[] childrenFrom,
+                                       int[] childrenTo) {
+            super(context, cursor, groupLayout, groupFrom, groupTo,
+                    childLayout, childrenFrom, childrenTo);
+        }
 
+
+        @Override
+        protected Cursor getChildrenCursor(Cursor groupCursor) {
+            DB_Helper dbHelper = new DB_Helper(getActivity().getApplicationContext());
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
+            Cursor childCursor = DB_Helper.fetchChildren(groupCursor.getString(groupCursor.getColumnIndex("task_id")), db);
+            getActivity().startManagingCursor(childCursor);
+            childCursor.moveToFirst();
+            return childCursor;
+        }
+
+}
 }
