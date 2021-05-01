@@ -1,11 +1,11 @@
 //Ask what everything does in this
 package com.example.myapplication.ui.daily;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +15,6 @@ import android.widget.ExpandableListView;
 
 import android.widget.ProgressBar;
 
-import android.widget.SimpleCursorTreeAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,53 +26,104 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.myapplication.DB_Helper;
 import com.example.myapplication.R;
 
+import java.util.ArrayList;
+
+import static android.content.ContentValues.TAG;
+
+
 public class DailyFragment extends Fragment {
     private DailyViewModel mViewModel;
     View rootView;
     ExpandableListView lv;
-    Cursor mGroupsCursor;
-    private Cursor taskCursor;
-    private Cursor goalCursor;
-    MyExpandableListAdapter mAdapter;
+
     //declaration of arrays
-    
+
     private String[] groups;
     private String[][] children;
-
+    String[] projection;
+    String[] bind;
+    Cursor taskCursor;
+    Cursor goalCursor;
+    int[] toGroup;
+    int[] toItem;
 
     public DailyFragment() {
 
     }
+    public String[] getTasks(){
+        DB_Helper dbHelper = new DB_Helper(getActivity().getApplicationContext());
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT title FROM task", null);
+        cursor.moveToFirst();
+        ArrayList<String> tasks = new ArrayList<String>();
+        while(!cursor.isAfterLast()) {
+            if(cursor!=null && cursor.getCount() > 0)
+            {
+            tasks.add(cursor.getString(cursor.getColumnIndex("title")));
+            cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        return tasks.toArray(new String[tasks.size()]);
+    }
+    public String[][] getGoals(){
+        DB_Helper dbHelper = new DB_Helper(getActivity().getApplicationContext());
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT title FROM TASK", null);
+        cursor.moveToFirst();
+        ArrayList<ArrayList<String>> goals = new ArrayList<ArrayList<String>>();
+        for(int i = 0; i<cursor.getCount() ; i++){
+            goals.add(new ArrayList<String>());
+        }
+   //     cursor.close();
+        cursor = db.rawQuery("SELECT title, task_id FROM goal", null);
+        cursor.moveToFirst();
 
+        while(!cursor.isAfterLast()) {
+//            int task_num = Integer.parseInt(cursor.getColumnIndex("task_id"));
+            int id = cursor.getInt(cursor.getColumnIndex("task_id"));
+            goals.get(goals.indexOf(cursor.getInt(cursor.getColumnIndex("task_id")))+id)
+                    .add(cursor.getString(cursor.getColumnIndex("title")));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        String[][] array = new String[goals.size()][];
+        for (int i = 0; i < goals.size(); i++) {
+            ArrayList<String> row = goals.get(i);
+            array[i] = row.toArray(new String[row.size()]);
+        }
+        return array;
+    }
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        //adds the text into the arrays created above
-        
-        groups = new String[] { "Test Header 1", "Test Header 2", "Test Header 3", "Test Header 4" };
-
-        children = new String [][] {
-                { "s simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." },
-                { "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of comes from a line in section 1.10.32." },
-                { "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)." },
-                { "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc." }
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ExpandableListAdapter adapter = new ExpandableListAdapter(groups, children);
+                adapter.notifyDataSetChanged();
+            }
         };
+        //adds the text into the arrays created above
+
+        groups = getTasks();
+        children = getGoals();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        DB_Helper dbHelper = new DB_Helper(getActivity().getApplicationContext());
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
         rootView = inflater.inflate(R.layout.daily_fragment, container, false);
 
         ProgressBar pb=(ProgressBar) rootView.findViewById(R.id.pb);
         //TODO: Select # of Complete Activities for Day Out of # of Total Activities. Multiply by 100 and Floor Result. Set Result to pb.
         pb.setProgress(33);
-        ExpandableListView expListView = (ExpandableListView) rootView.findViewById(R.id.expandableListView);
-        DB_Helper mDbHelper = new DB_Helper(getActivity());
-        //mDbHelper.open();
-        fillData();
+        //ExpandableListView expListView = (ExpandableListView) rootView.findViewById(R.id.expandableListView);
+
 
         return rootView;
-        
+
     }
 
     @Override
@@ -81,184 +131,147 @@ public class DailyFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         lv = (ExpandableListView) view.findViewById(R.id.expandableListView);
-//        lv.setAdapter(new ExpandableListAdapter(groups, children));
-//        lv.setGroupIndicator(null);
-
+        lv.setAdapter(new ExpandableListAdapter(groups, children));
+        lv.setGroupIndicator(null);
+        getGoals();
 
 
     }
-    private void fillData() {
-        DB_Helper dbHelper = new DB_Helper(getActivity().getApplicationContext());
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        taskCursor = DB_Helper.fetchGroup(db);
-        getActivity().startManagingCursor(taskCursor);
-        taskCursor.moveToFirst();
-        View view = getLayoutInflater().inflate(R.layout.daily_fragment, null);
-        ExpandableListView expListView = (ExpandableListView) view.findViewById(R.id.expandableListView);
 
-        mAdapter = new MyExpandableListAdapter(taskCursor, getActivity(),
-                R.layout.list_group,                     // Your row layout for a group
-                R.layout.list_item,                 // Your row layout for a child
-                new String[] { "task_id" },                      // Field(s) to use from group cursor
-                new int[] { R.id.listTitle },                 // Widget ids to put group data into
-                new String[] { "title", },  // Field(s) to use from child cursors
-                new int[] { R.id.item1, });          // Widget ids to put child data into
-        lv = (ExpandableListView) view.findViewById(R.id.expandableListView);
+    public class ExpandableListAdapter extends BaseExpandableListAdapter implements ExpandableListView.OnGroupClickListener {
 
-        lv.setAdapter(mAdapter);                         // set the list adapter.
+        //declaration of variables
+
+        private final LayoutInflater inf;
+        private String[] groups;
+        private String[][] children;
+        //creates expandable list adapter method
+        public ExpandableListAdapter(String[] groups, String[][] children) {
+            this.groups = groups;
+            this.children = children;
+            inf = LayoutInflater.from(getActivity());
+        }
+
+        @Override
+        //get me
+        public int getGroupCount() {
+            return groups.length;
+        }
+
+        @Override
+        public int getChildrenCount(int groupPosition) {
+            try { return children[groupPosition].length;}
+            catch (Exception E){return 0;}
+
+        }
+
+        @Override
+        public Object getGroup(int groupPosition) {
+            return groups[groupPosition];
+        }
+
+        @Override
+        public Object getChild(int groupPosition, int childPosition) {
+            return children[groupPosition][childPosition];
+        }
+
+        @Override
+        public long getGroupId(int groupPosition) {
+            return groupPosition;
+        }
+
+        @Override
+        public long getChildId(int groupPosition, int childPosition) {
+            return childPosition;
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return true;
+        }
+
+        @Override
+        public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+
+            ViewHolder holder;
+            if (convertView == null) {
+                convertView = inf.inflate(R.layout.list_item, parent, false);
+                holder = new ViewHolder();
+
+                holder.text = (TextView) convertView.findViewById(R.id.item1);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            holder.text.setText(getChild(groupPosition, childPosition).toString());
+
+            return convertView;
+        }
+
+        @Override
+        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+
+            if (convertView == null) {
+                convertView = inf.inflate(R.layout.list_group, parent, false);
+
+                holder = new ViewHolder();
+                holder.text = (TextView) convertView.findViewById(R.id.listTitle);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            holder.text.setText(getGroup(groupPosition).toString());
+
+            return convertView;
+        }
+
+        @Override
+        public boolean isChildSelectable(int groupPosition, int childPosition) {
+            return true;
+        }
+
+        @Override
+        public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+            parent.smoothScrollToPosition(groupPosition);
+
+            if (parent.isGroupExpanded(groupPosition)) {
+                parent.collapseGroup(groupPosition);
+            } else {
+                parent.expandGroup(groupPosition);
+            }
+//            Button options = (Button) rootView.findViewById(R.id.task_options);
+//            options.setOnClickListener( new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    final CharSequence[] items = {"Red", "Green", "Blue"};
+//
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//                    builder.setTitle("Pick a color");
+//                    builder.setItems(items, new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int item) {
+//                            Toast.makeText(getActivity().getApplicationContext(), items[item], Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//                    AlertDialog alert = builder.create();
+//                    alert.show();
+//                }
+//            });
+            return false;
+        }
+
+        private class ViewHolder {
+            TextView text;
+        }
     }
 
-//    public class ExpandableListAdapter extends BaseExpandableListAdapter implements ExpandableListView.OnGroupClickListener {
-//
-//        //declaration of variables
-//
-//        private final LayoutInflater inf;
-//        private String[] groups;
-//        private String[][] children;
-//        //creates expanable list adapter method
-//        public ExpandableListAdapter(String[] groups, String[][] children) {
-//            this.groups = groups;
-//            this.children = children;
-//            inf = LayoutInflater.from(getActivity());
-//        }
-//
-//        @Override
-//        //get me
-//        public int getGroupCount() {
-//            return groups.length;
-//        }
-//
-//        @Override
-//        public int getChildrenCount(int groupPosition) {
-//            return children[groupPosition].length;
-//        }
-//
-//        @Override
-//        public Object getGroup(int groupPosition) {
-//            return groups[groupPosition];
-//        }
-//
-//        @Override
-//        public Object getChild(int groupPosition, int childPosition) {
-//            return children[groupPosition][childPosition];
-//        }
-//
-//        @Override
-//        public long getGroupId(int groupPosition) {
-//            return groupPosition;
-//        }
-//
-//        @Override
-//        public long getChildId(int groupPosition, int childPosition) {
-//            return childPosition;
-//        }
-//
-//        @Override
-//        public boolean hasStableIds() {
-//            return true;
-//        }
-//
-//        @Override
-//        public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-//
-//            ViewHolder holder;
-//            if (convertView == null) {
-//                convertView = inf.inflate(R.layout.list_item, parent, false);
-//                holder = new ViewHolder();
-//
-//                holder.text = (TextView) convertView.findViewById(R.id.item1);
-//                convertView.setTag(holder);
-//            } else {
-//                holder = (ViewHolder) convertView.getTag();
-//            }
-//
-//            holder.text.setText(getChild(groupPosition, childPosition).toString());
-//
-//            return convertView;
-//        }
-//
-//        @Override
-//        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-//            ViewHolder holder;
-//
-//            if (convertView == null) {
-//                convertView = inf.inflate(R.layout.list_group, parent, false);
-//
-//                holder = new ViewHolder();
-//                holder.text = (TextView) convertView.findViewById(R.id.listTitle);
-//                convertView.setTag(holder);
-//            } else {
-//                holder = (ViewHolder) convertView.getTag();
-//            }
-//
-//            holder.text.setText(getGroup(groupPosition).toString());
-//
-//            return convertView;
-//        }
-//
-//        @Override
-//        public boolean isChildSelectable(int groupPosition, int childPosition) {
-//            return true;
-//        }
-//
-//        @Override
-//        public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-//            parent.smoothScrollToPosition(groupPosition);
-//
-//            if (parent.isGroupExpanded(groupPosition)) {
-//                parent.collapseGroup(groupPosition);
-//            } else {
-//                parent.expandGroup(groupPosition);
-//            }
-////            Button options = (Button) rootView.findViewById(R.id.task_options);
-////            options.setOnClickListener( new View.OnClickListener() {
-////                @Override
-////                public void onClick(View v) {
-////                    final CharSequence[] items = {"Red", "Green", "Blue"};
-////
-////                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-////                    builder.setTitle("Pick a color");
-////                    builder.setItems(items, new DialogInterface.OnClickListener() {
-////                        public void onClick(DialogInterface dialog, int item) {
-////                            Toast.makeText(getActivity().getApplicationContext(), items[item], Toast.LENGTH_SHORT).show();
-////                        }
-////                    });
-////                    AlertDialog alert = builder.create();
-////                    alert.show();
-////                }
-////            });
-//            return false;
-//        }
-//
-//        private class ViewHolder {
-//            TextView text;
-//        }
-//    }
-//
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(DailyViewModel.class);
         // TODO: Use the ViewModel
     }
-    public class MyExpandableListAdapter extends SimpleCursorTreeAdapter {
-        public MyExpandableListAdapter(Cursor cursor, Context context, int groupLayout,
-                                       int childLayout, String[] groupFrom, int[] groupTo, String[] childrenFrom,
-                                       int[] childrenTo) {
-            super(context, cursor, groupLayout, groupFrom, groupTo,
-                    childLayout, childrenFrom, childrenTo);
-        }
 
-
-        @Override
-        protected Cursor getChildrenCursor(Cursor groupCursor) {
-            DB_Helper dbHelper = new DB_Helper(getActivity().getApplicationContext());
-            SQLiteDatabase db = dbHelper.getReadableDatabase();
-            Cursor childCursor = DB_Helper.fetchChildren(groupCursor.getString(groupCursor.getColumnIndex("task_id")), db);
-            getActivity().startManagingCursor(childCursor);
-            childCursor.moveToFirst();
-            return childCursor;
-        }
-
-}
 }

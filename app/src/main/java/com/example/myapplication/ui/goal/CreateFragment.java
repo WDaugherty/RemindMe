@@ -156,7 +156,7 @@ public class CreateFragment extends Fragment implements DatePickerDialog.OnDateS
 
                 // String str_task = task.getSelectedItem().toString();
                 // SQL SELECT ID OF SELECTED ITEM
-                int task_id = 1; //CHANGE THIS TO NOT BE HARD CODED LATER
+                int task_id = 4; //CHANGE THIS TO NOT BE HARD CODED LATER
                 values.put(Contract.GoalEntry.COLUMN_NAME_TASK_ID, task_id);
 
                 int completed = 0;

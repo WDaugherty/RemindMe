@@ -65,12 +65,13 @@ import android.widget.Toast;
 
 import android.widget.TimePicker;
 
-
+import com.example.myapplication.ui.daily.DailyFragment;
 import com.example.myapplication.Contract;
 import com.example.myapplication.DB_Helper;
 import com.example.myapplication.DatePickerFragment;
 import com.example.myapplication.R;
 import com.example.myapplication.TimePickerFragment;
+import com.example.myapplication.ui.daily.DailyFragment;
 import com.example.myapplication.ui.goal.CreateViewModel;
 import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;
@@ -252,6 +253,7 @@ public class CreateFragment extends Fragment implements DatePickerDialog.OnDateS
                                         //show the toast
                                         toast = Toast.makeText(getActivity().getApplicationContext(), result, duration);
                                         toast.show();
+
                                     }
                                 });
 

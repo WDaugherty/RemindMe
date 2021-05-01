@@ -14,7 +14,7 @@ public class DB_Helper extends SQLiteOpenHelper {
     private static final String COMMA_SEP =", ";
     private static final String TEXT_TYPE = " TEXT";
     private static final String SQL_CREATE_TASK = "CREATE TABLE " + Contract.TaskEntry.TABLE_NAME + " (" +
-            Contract.TaskEntry._ID + "INTEGER PRIMARY KEY" + COMMA_SEP+
+            Contract.TaskEntry._ID + " INTEGER PRIMARY KEY" + COMMA_SEP+
             Contract.TaskEntry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP+
             Contract.TaskEntry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE + COMMA_SEP+
             Contract.TaskEntry.COLUMN_NAME_LOCATION + TEXT_TYPE + COMMA_SEP+
