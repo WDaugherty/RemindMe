@@ -5,10 +5,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 
+import com.example.myapplication.ui.daily.DailyFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -55,8 +59,6 @@ public class DailyActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                //Intent intent = new Intent(getApplicationContext(), CreateTaskActivity.class);
-                //startActivity(intent);
                 navController.navigate(R.id.nav_create_task);
             }
         });
@@ -93,8 +95,9 @@ public class DailyActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        
+
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
 }

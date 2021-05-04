@@ -119,12 +119,8 @@ public class CreateFragment extends Fragment implements DatePickerDialog.OnDateS
         // Set the fields to specify which types of place data to
         // return after the user has made a selection.
         List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS);
-
-        // Start the autocomplete intent.
         title = (EditText) view.findViewById(R.id.title);
-
-//        final AutocompleteSupportFragment autocompleteSupportFragment =
-//                (AutocompleteSupportFragment) getChildFragmentManager().findFragmentById(R.id.autocomplete_fragment);
+        // Start the autocomplete intent on location field click
         location = (EditText) view.findViewById(R.id.location);
         location.setOnClickListener(new View.OnClickListener() { // On click of location field
             @Override
@@ -139,17 +135,17 @@ public class CreateFragment extends Fragment implements DatePickerDialog.OnDateS
         });
         description = (EditText) view.findViewById(R.id.description);
 
-        Button startDate, startTime, endDate, endTime, discard, save;
+        Button endDate, endTime, discard, save;
 
         endDate = view.findViewById(R.id.date);
         endTime = view.findViewById(R.id.time);
         discard = view.findViewById(R.id.discard);
         save = view.findViewById(R.id.save_task);
-
+        // set on click listeners for each button
         endDate.setOnClickListener(new View.OnClickListener() { // Fully functioning, no change needed
 
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { // use datepicker for end date
                 FragmentTransaction ft = getParentFragmentManager().beginTransaction();
                 DialogFragment endDateFragment = new DatePickerFragment(CreateFragment.this);
                 endDateFragment.show(ft, "dialog");
@@ -159,7 +155,7 @@ public class CreateFragment extends Fragment implements DatePickerDialog.OnDateS
         endTime.setOnClickListener(new View.OnClickListener() { // Fully functioning, no change needed
 
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { // use time picker for end time
                 FragmentTransaction ft = getParentFragmentManager().beginTransaction();
                 DialogFragment endTimeFragment = new TimePickerFragment(CreateFragment.this);
                 endTimeFragment.show(ft, "dialog");
@@ -168,7 +164,7 @@ public class CreateFragment extends Fragment implements DatePickerDialog.OnDateS
         discard.setOnClickListener(new View.OnClickListener() { // Fully functioning, no change needed
 
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { // discard new goal, navigate up backstack
                 DrawerLayout drawer = v.findViewById(R.id.drawer_layout);
                 NavigationView navigationView = v.findViewById(R.id.nav_view);
                 // Passing each menu ID as a set of Ids because each
@@ -186,31 +182,13 @@ public class CreateFragment extends Fragment implements DatePickerDialog.OnDateS
         save.setOnClickListener(new View.OnClickListener() {
 
                                     @Override
-                                    public void onClick(View v) {
+                                    public void onClick(View v) { // insert and navigate up backstack
                                         DB_Helper myDbHelper = new DB_Helper(getActivity().getApplicationContext());
                                         SQLiteDatabase db = myDbHelper.getWritableDatabase();
                                         ContentValues values = new ContentValues();
-                                        //Set values with values pulled from fields
 
-                                        //Create java Calendar Instance. Pass In Date and Time Parameters, but must convert the global variable to integer
-                                        //Get Time from Calendar, store in new variable to put in table
 
-                                        // Alternatively
-
-                                        //String str = "PUT STRING VERSION OF DATE HERE"; //Concatenate the string global variables into the format on the next line
-                                        //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                                        //Date date = df.parse(str);
-                                        //long epoch = date.getTime(); // Gets time as long epoch, insert into INTEGER column in table
-                                        //System.out.println(epoch); // 1055545912454
-
-                                        //Example: May not be exactly correct
-                                        //values.put(Contract.TaskEntry.COLUMN_NAME_TITLE, str_title);
-                                        //values.put(Contract.TaskEntry.COLUMN_NAME_DESCRIPTION, str_description);
-                                        //values.put(Contract.TaskEntry.COLUMN_NAME_LOCATION, str_location);
-                                        //values.put(Contract.TaskEntry.COLUMN_NAME_DATE_TIME, (int) unix);
-                                        //values.put(Contract.TaskEntry.COLUMN_NAME_COMPLETED, 0);
-
-                                        //Execute Insertion
+                                        // set calendar values to get time as millis for db
                                         Calendar cal = Calendar.getInstance();
                                         cal.set(Calendar.YEAR, year_g);
                                         cal.set(Calendar.MONTH, month);
@@ -218,42 +196,35 @@ public class CreateFragment extends Fragment implements DatePickerDialog.OnDateS
                                         cal.set(Calendar.HOUR_OF_DAY, hour);
                                         cal.set(Calendar.MINUTE, minute_g);
                                         long millis = cal.getTimeInMillis();
-                                        Context context = getActivity().getApplicationContext();
-                                        int duration = Toast.LENGTH_SHORT;
-
-                                        Toast toast = Toast.makeText(context, String.valueOf(millis), duration);
-                                        toast.show();
-
+                                        // get title and desc values
                                         String str_title = title.getText().toString();
-                                        //EditText desc = vue.findViewById(R.id.location);
                                         String str_description =  description.getText().toString();
-
+                                        //store in values
                                         values.put(Contract.TaskEntry.COLUMN_NAME_TITLE, str_title);
                                         values.put(Contract.TaskEntry.COLUMN_NAME_DESCRIPTION, str_description);
+                                        // this is from global variable
                                         values.put(Contract.TaskEntry.COLUMN_NAME_LOCATION, str_location);
+                                        // set time in millis
                                         values.put(Contract.TaskEntry.COLUMN_NAME_DATE_TIME, millis);
+                                        // assume a new task is not complete
                                         values.put(Contract.TaskEntry.COLUMN_NAME_COMPLETED, 0);
 
                                         long newRowId = db.insert(
                                                 Contract.TaskEntry.TABLE_NAME,  //table name for insert
                                                 null,  //null is all columns
                                                 values);  //values for the insert
-                                        duration = Toast.LENGTH_LONG;
-                                        String result;
-                                        if (newRowId != -1)
-                                        {
-                                            result = "New Person Created!";
-                                        }
+                                        DrawerLayout drawer = v.findViewById(R.id.drawer_layout);
+                                        NavigationView navigationView = v.findViewById(R.id.nav_view);
+                                        // Passing each menu ID as a set of Ids because each
+                                        // menu should be considered as top level destinations.
+                                        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                                                R.id.nav_daily, R.id.nav_weekly, R.id.nav_monthly)
+                                                .setDrawerLayout(drawer)
+                                                .build();
+                                        NavController navController = Navigation.findNavController((AppCompatActivity)getActivity(), R.id.nav_host_fragment);
 
-                                        else
-                                        {
-                                            result = "ERORR";
-                                        }
 
-                                        //show the toast
-                                        toast = Toast.makeText(getActivity().getApplicationContext(), result, duration);
-                                        toast.show();
-
+                                        NavigationUI.navigateUp(navController, mAppBarConfiguration);
                                     }
                                 });
 
@@ -287,12 +258,12 @@ public class CreateFragment extends Fragment implements DatePickerDialog.OnDateS
 
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) { // Fully functioning, no change needed
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) { // Fully functioning, no change needed. Activity result for API intent
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 Place place = Autocomplete.getPlaceFromIntent(data);
                 Log.i("PlacesApi", "Place: " + place.getName() + ", " + place.getId());
-                str_location = place.getName() + ", " + place.getAddress();
+                str_location = place.getName() + ", " + place.getAddress(); // set location variable and text
                 location.setText(place.getName() + ", " + place.getAddress());
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 // TODO: Handle the error.

@@ -28,12 +28,13 @@
             tools:ignore="SpUsage"
             android:layout_weight="1.8"
             android:paddingStart="6dip" />
-<!--            <Button-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:id="@+id/task_options"-->
-<!--                android:text="Options"-->
-<!--                android:layout_weight="0.2"/>-->
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/task_options"
+                android:text="Options"
+                android:layout_weight="0.2"
+                android:focusable="false"/>
         </LinearLayout>
     </LinearLayout>
 

@@ -8,12 +8,6 @@
 
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Monthly" />
-
-
-    <TextView
         android:id="@+id/dateView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,8 +17,8 @@
         android:textColor="@android:color/background_dark"
         android:textStyle="bold" />
 
-   
-    //Adds in a calendar view to implement and display a calendar
+
+
     <CalendarView
         android:id="@+id/calender"
         android:layout_marginTop="80dp"
@@ -32,5 +26,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
     </CalendarView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="See Tasks"
+        android:id="@+id/tasks"/>
 
 </FrameLayout>
