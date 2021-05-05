@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <!--Name: Fragment List Item
     Date: 5/5/21
     Overview: Allows creation of fragments in the RemindMe application
     /-->
+=======
+
+>>>>>>> dfa28717cbe85459d4d8e893cec6b5b348abf026
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+<<<<<<< HEAD
     <!-- The options button on the right; allows the user to select the choice they choose under the listed item.   /-->
+=======
+>>>>>>> dfa28717cbe85459d4d8e893cec6b5b348abf026
 
     <LinearLayout
         android:orientation="horizontal"

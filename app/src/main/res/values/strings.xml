@@ -34,6 +34,9 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="this_month">This Month</string>
+<<<<<<< HEAD
     <string name="edit_task">edit task</string>
     <string name="hello_blank_fragment">hello</string>
+=======
+>>>>>>> dfa28717cbe85459d4d8e893cec6b5b348abf026
 </resources>

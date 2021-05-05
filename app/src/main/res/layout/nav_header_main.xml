@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <!--Name: Navigation Header Main
     Date: 5/5/21
     Overview: Allows creation of navigation header in the RemindMe application
     /-->
 
 <!-- Space for the ReminMe name   /-->
+=======
+>>>>>>> dfa28717cbe85459d4d8e893cec6b5b348abf026
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"

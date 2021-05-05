@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <!--Name: Fragment Create Goal
     Date: 5/5/21
     Overview: Allows creation of fragments in the RemindMe application
     /-->
+=======
+>>>>>>> dfa28717cbe85459d4d8e893cec6b5b348abf026
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+<<<<<<< HEAD
     <!-- Defines creating a goal  /-->
+=======
+>>>>>>> dfa28717cbe85459d4d8e893cec6b5b348abf026
     <RelativeLayout
         android:id="@+id/nav_create_goal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+<<<<<<< HEAD
 
         <!-- Defines a default textview for the created fragments    /-->
+=======
+>>>>>>> dfa28717cbe85459d4d8e893cec6b5b348abf026
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,8 +46,11 @@
             android:layout_below="@+id/create_goal_text"
             android:inputType="text|textAutoCorrect"
             android:id="@+id/title"/>
+<<<<<<< HEAD
 
         <!-- Displays a dropdown selection   /-->
+=======
+>>>>>>> dfa28717cbe85459d4d8e893cec6b5b348abf026
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="match_parent"

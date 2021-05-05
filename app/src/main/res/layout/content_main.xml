@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <!--Name: Content
     Date: 5/5/21
     Overview: Hold all content for the RemindMe application
     /-->
+=======
+>>>>>>> dfa28717cbe85459d4d8e893cec6b5b348abf026
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,7 +14,10 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main">
 
+<<<<<<< HEAD
     <!-- Host the navigation fragment   /-->
+=======
+>>>>>>> dfa28717cbe85459d4d8e893cec6b5b348abf026
     <fragment
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"

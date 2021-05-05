@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <!--Name: Weekly Fragment
     Date: 5/5/21
     Overview: Allows creation of fragments in the RemindMe application
     /-->
+=======
+>>>>>>> dfa28717cbe85459d4d8e893cec6b5b348abf026
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.weekly.WeeklyFragment">
+<<<<<<< HEAD
     <!--Shows the daily tasks in a expandable list view  /-->
+=======
+
+>>>>>>> dfa28717cbe85459d4d8e893cec6b5b348abf026
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/LinearLayout2"
         android:layout_width="match_parent"
