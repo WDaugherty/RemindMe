@@ -1,0 +1,39 @@
+<resources>
+
+
+
+    <string name="app_name">RemindMev2</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="save_task">Save Task</string>
+    <string name="menu_daily">Today\'s Tasks</string>
+    <string name="menu_weekly">This Week</string>
+    <string name="menu_monthly">This Month</string>
+    <string name="title_activity_layout_drawer_edit_task">LayoutDrawerEditTaskActivity</string>
+    <string name="create_task">Create a Task</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="title_activity_edit_task">EditTaskActivity</string>
+    <string name="title_activity_create_task">CreateTaskActivity</string>
+    <string name="title_activity_create_goal">CreateGoalActivity</string>
+    <string name="title">Title</string>
+    <string name="pick_start_date">Start Date</string>
+    <string name="pick_start_time">Start Time</string>
+    <string name="pick_end_date">End Date</string>
+    <string name="pick_end_time">End Time</string>
+    <string name="edit_goal">Edit Goal</string>
+    <string name="discard">Discard</string>
+    <string name="save_goal">Save Goal</string>
+    <string name="create_goal">Create a Goal</string>
+    <string name="delete_goal">Delete Goal</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="this_month">This Month</string>
+    <string name="edit_task">edit task</string>
+    <string name="hello_blank_fragment">hello</string>
+</resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Name: Fragment List Group
+    Date: 5/5/21
+    Overview: Allows creation of fragments in the RemindMe application
+    /-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+
+    <!-- The options button on the top right; allows the user to select the choice they choose.   /-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:orientation="vertical" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="2">
+        <TextView
+            android:id="@+id/listTitle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="6dip"
+            android:paddingTop="6dip"
+            android:textColor="#CC0000"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            tools:ignore="SpUsage"
+            android:layout_weight="1.8"
+            android:paddingStart="6dip" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/task_options"
+                android:text="Options"
+                android:layout_weight="0.2"
+                android:focusable="false"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
